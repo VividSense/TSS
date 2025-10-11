@@ -12,6 +12,110 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <!-- defer scripts -->
     <script type="text/javascript" src="darkmode.js" defer></script>
+    <style>
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .team-member {
+            text-align: center;
+            opacity: 0;
+            filter: blur(5px);
+            transition: opacity 1s, filter 1s, transform 1s;
+        }
+
+        .team-member.show {
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .team-member:nth-child(1) { transition-delay: 100ms; }
+        .team-member:nth-child(2) { transition-delay: 300ms; }
+        .team-member:nth-child(3) { transition-delay: 500ms; }
+        .team-member:nth-child(4) { transition-delay: 700ms; }
+
+        .team-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: var(--highlight-color);
+            margin: 0 auto 20px;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .team-photo:hover {
+            transform: scale(1.05);
+            border-color: var(--text-color);
+        }
+
+        .team-name {
+            font-family: "Space Mono", monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-color);
+            margin: 10px 0;
+        }
+
+        .team-role {
+            font-family: "Space Mono", monospace;
+            font-size: 1rem;
+            color: var(--accent-color);
+        }
+
+        .social-icon {
+            display: inline-flex;
+            height: 100px;
+            width: 100px;
+            background-color: transparent;
+            border-radius: 20px;
+            margin: 15px;
+            padding: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .social-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        @media screen and (max-width: 768px) {
+            .team-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 30px;
+            }
+
+            .team-photo {
+                width: 150px;
+                height: 150px;
+            }
+
+            .team-name {
+                font-size: 1.2rem;
+            }
+
+            .team-role {
+                font-size: 0.9rem;
+            }
+
+            .social-icon {
+                height: 70px;
+                width: 70px;
+                margin: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -69,7 +173,6 @@
             <section class="left">
                 <h1 class="heading animate">MISSION</h1>
                 <div class="logos">
-
                     <h1 class="text hidden logo">Our mission is to create high-quality, affordable</h1>
                     <h1 class="text hidden logo">products that enhance accessibility and improve</h1>
                     <h1 class="text hidden logo">the lives of individuals with disabilities through </h1>
@@ -86,27 +189,57 @@
                     <h1 class="text hidden logo">continually enhance and expand our products.</h1>
                 </div>
             </section>
+            <div class="scroll-space" style="height: 150;"></div>
+            
+            <!-- Meet the Team Section -->
+            <section class="middle shifter">
+                <h1 class="heading animate">MEET THE TEAM</h1>
+                <div class="scroll-space" style="height: 50;"></div>
+                <div class="team-grid">
+                    <div class="team-member hidden">
+                        <img src="team-member-1.jpg" alt="Team Member 1" class="team-photo">
+                        <h2 class="team-name">MEMBER NAME</h2>
+                        <p class="team-role">Role/Position</p>
+                    </div>
+                    <div class="team-member hidden">
+                        <img src="team-member-2.jpg" alt="Team Member 2" class="team-photo">
+                        <h2 class="team-name">MEMBER NAME</h2>
+                        <p class="team-role">Role/Position</p>
+                    </div>
+                    <div class="team-member hidden">
+                        <img src="team-member-3.jpg" alt="Team Member 3" class="team-photo">
+                        <h2 class="team-name">MEMBER NAME</h2>
+                        <p class="team-role">Role/Position</p>
+                    </div>
+                    <div class="team-member hidden">
+                        <img src="team-member-4.jpg" alt="Team Member 4" class="team-photo">
+                        <h2 class="team-name">MEMBER NAME</h2>
+                        <p class="team-role">Role/Position</p>
+                    </div>
+                </div>
+            </section>
+
+            <div class="scroll-space" style="height: 150;"></div>
+            
+            <!-- Socials Section with Flaticon Icons -->
+            <section class="middle shifter">
+                <h1 class="heading animate">CHECK OUT OUR SOCIALS</h1>
+                <div class="logos">
+                    <a href="https://www.youtube.com/channel/UCce25dALBU-FBtp3x4Mviig" target="_blank" class="hidden logo social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+                    </a>
+                    <a href="https://docs.google.com/presentation/d/1mtiMjMDU8-jYf_7-Orw9O-npHBNfqMqUWHXhsucdwM4/edit#slide=id.g31ac4e85be0_0_0" target="_blank" class="hidden logo social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991110.png" alt="Google Slides">
+                    </a>
+                    <a href="https://github.com/0825eshaan/vividsense" target="_blank" class="hidden logo social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733553.png" alt="GitHub">
+                    </a>
+                    <a href="https://www.tinkercad.com/things/8GJaLu0PdzS-the-surrounding-scanner-externals?sharecode=MeUskOSY0V2klqwGewo-5_0wL6vF0Ra1C9Eyv1B8suI" target="_blank" class="hidden logo social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5969/5969346.png" alt="Tinkercad">
+                    </a>
+                </div>
+            </section>
             <div class="scroll-space" style="height: 100;"></div>
-        </section>
-        <div class="scroll-space" style="height: 100;"></div>
-        <section class="middle shifter">
-            <h1 class="heading animate">CHECK OUT OUR SOCIALS</h1>
-            <div class="logos">
-            <a href="https://www.youtube.com/channel/UCce25dALBU-FBtp3x4Mviig" target="_blank" class="hidden logo">
-                <img src="youtubeicon.png" alt="youtubeicon" class="icon">
-            </a>
-            <a href="https://docs.google.com/presentation/d/1mtiMjMDU8-jYf_7-Orw9O-npHBNfqMqUWHXhsucdwM4/edit#slide=id.g31ac4e85be0_0_0" target="_blank" class="hidden logo">
-                <img src="sildesicon.png" alt="sildesicon" class="icon">
-            </a>
-            <a href="https://github.com/0825eshaan/vividsense" target="_blank" class="hidden logo">
-                <img src="giticon.png" alt="giticon" class="icon">
-            </a>
-            <a href="https://www.tinkercad.com/things/8GJaLu0PdzS-the-surrounding-scanner-externals?sharecode=MeUskOSY0V2klqwGewo-5_0wL6vF0Ra1C9Eyv1B8suI" target="_blank" class="hidden logo">
-                <img src="tinkericon.png" alt="tinkericon" class="icon">
-            </a>
-            </div>
-        </section>
-        <div class="scroll-space" style="height: 100;"></div>
         </div>
     </div>
     <!-- Scripts -->
@@ -114,6 +247,19 @@
     <script src="cypher_animation.js"></script>
     <script src="index.js"></script>
     <script src="app.js"></script>
+    <script>
+        // Add observer for team members
+        const teamObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        });
+
+        const teamMembers = document.querySelectorAll('.team-member');
+        teamMembers.forEach((el) => teamObserver.observe(el));
+    </script>
 
 </body>
 
