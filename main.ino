@@ -13,7 +13,6 @@ float inch_min = 20;
 
 void setup() {
   Serial.begin(9600);
-  //Configuring Pins
   pinMode(trigger, OUTPUT);
   pinMode(echo, INPUT);
   pinMode(PIEZO_PIN, OUTPUT);
