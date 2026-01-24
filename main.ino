@@ -29,7 +29,8 @@ void loop() {
   delayMicroseconds(10);
   digitalWrite(TRIGGER, LOW);
 
-  distance = pulseIn(ECHO, HIGH, 38000) * 343/1000/2;
+  // Max: 24000*343/1000/2 = 4116mm = 411.6cm = 162in (HC-SR04 has reliable range of 400cm)
+  distance = pulseIn(ECHO, HIGH, 24000) * 343/1000/2;
 
   // Determine the tone based on distance thresholds
   if (inRange(distance, thresholds[0], thresholds[1])) {
@@ -51,8 +52,10 @@ void loop() {
   noTone(PIEZO_PIN);
 
   Serial.print("Distance: ");
-  Serial.print(distance);
-  Serial.println("mm");
+  // Serial.print(distance);
+  // Serial.println("mm");
+  Serial.print(distance*5/127);
+  Serial.println("in");
 
 
   delay(50);
