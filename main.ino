@@ -1,62 +1,62 @@
 #define PIEZO_PIN 9  
+#define TRIGGER 6
+#define ECHO 7
 
-const int trigger = 6;
-const int echo = 7;
-float distance;
-float dist_inches;
+int16_t distance; //In mm
 
-float inch_maxthreshold = 60;
-float inch_secondmax = 50;
-float inch_medium = 40;
-float inch_secondmin = 30;
-float inch_min = 20;
+int16_t thresholds[] = {51, 508, 762, 1016, 1270, 1524}; //In mm
+
+// Inclusive of both bounds
+bool inRange(int16_t var, int16_t min, int16_t max) {
+  if (var >= min && var <= max) {
+    return true;
+  }
+  return false;
+}
 
 void setup() {
   Serial.begin(9600);
-  pinMode(trigger, OUTPUT);
-  pinMode(echo, INPUT);
+  pinMode(TRIGGER, OUTPUT);
+  pinMode(ECHO, INPUT);
   pinMode(PIEZO_PIN, OUTPUT);
 }
 
 void loop() {
   //Creating ultrasonic pulse
-  digitalWrite(trigger, LOW);
+  digitalWrite(TRIGGER, LOW);
   delayMicroseconds(5);
-  digitalWrite(trigger, HIGH);
+  digitalWrite(TRIGGER, HIGH);
   delayMicroseconds(10);
-  digitalWrite(trigger, LOW);
+  digitalWrite(TRIGGER, LOW);
 
-  // Measure duration of echo and calculate distance
-  distance = pulseIn(echo, HIGH, 38000); 
-  distance = distance * 0.0135;         
-  dist_inches = distance;
+  // Max: 24000*343/1000/2 = 4116mm = 411.6cm = 162in (HC-SR04 has reliable range of 400cm)
+  distance = pulseIn(ECHO, HIGH, 24000) * 343/1000/2;
 
   // Determine the tone based on distance thresholds
-  if (dist_inches > 2 && dist_inches < inch_min) {
+  if (inRange(distance, thresholds[0], thresholds[1])) {
     tone(PIEZO_PIN, 1725);
     delay(50);
-    noTone(PIEZO_PIN);
-  } else if (dist_inches >= inch_min && dist_inches < inch_secondmin) {
+  } else if (inRange(distance, thresholds[1], thresholds[2])) {
     tone(PIEZO_PIN, 1675);
     delay(125);
-    noTone(PIEZO_PIN);
-  } else if (dist_inches >= inch_secondmin && dist_inches < inch_medium) {
+  } else if (inRange(distance, thresholds[2], thresholds[3])) {
     tone(PIEZO_PIN, 1550);
     delay(150);
-    noTone(PIEZO_PIN);
-  } else if (dist_inches >= inch_medium && dist_inches < inch_secondmax) {
+  } else if (inRange(distance, thresholds[3], thresholds[4])) {
     tone(PIEZO_PIN, 1475);
     delay(175);
-    noTone(PIEZO_PIN);
-  } else if (dist_inches >= inch_secondmax && dist_inches < inch_maxthreshold) {
+  } else if (inRange(distance, thresholds[4], thresholds[5])) {
     tone(PIEZO_PIN, 1400);
     delay(225);
-    noTone(PIEZO_PIN);
   }
+  noTone(PIEZO_PIN);
 
   Serial.print("Distance: ");
-  Serial.print(dist_inches);
-  Serial.println(" in");
+  // Serial.print(distance);
+  // Serial.println("mm");
+  Serial.print(distance*5/127);
+  Serial.println("in");
+
 
   delay(50);
 }
